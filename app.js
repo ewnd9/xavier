@@ -18,7 +18,9 @@ var run = function(cmd) {
 
 var express = require('express');
 var app = express();
+var morgan = require('morgan');
 
+app.use(morgan('request: :remote-addr :method :url :status'));
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'jade');
 
