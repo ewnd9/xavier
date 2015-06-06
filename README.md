@@ -6,7 +6,6 @@ Pluggable remote control for your system.
 
 ```
 $ npm install -g xavier
-
 ```
 
 ## Usage
@@ -14,6 +13,9 @@ $ npm install -g xavier
 ```
 $ xavier
 
+socket service: localhost:3002
+web interface: localhost:3001
+config file: /home/ewnd9/.npm-packages/lib/node_modules/xavier/config.json
 ```
 
 ## License
