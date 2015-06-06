@@ -1,0 +1,21 @@
+{
+  "name": "xavier",
+  "version": "0.0.1",
+  "description": "remote control",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "preferGlobal": "true",
+  "bin": {
+    "xavier": "./app.js"
+  },
+  "author": "ewnd9 <ewndnine@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^2.9.27",
+    "express": "^4.12.4",
+    "jade": "^1.10.0",
+    "socket.io": "^1.3.5"
+  }
+}
