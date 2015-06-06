@@ -20,7 +20,7 @@ config file: /home/ewnd9/.npm-packages/lib/node_modules/xavier/config.json
 
 ## Web Interface
 
-![Nexus 5 Example](/interface.png?raw=true)
+![Nexus 5 Example](/web-interface.png?raw=true)
 
 ## License
 
