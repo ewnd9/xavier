@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hello World!</title>
+</head>
+<body>
+  <h1>Hello World!</h1>
+  We are using io.js <script>document.write(process.version)</script>
+  and Electron <script>document.write(process.versions['electron'])</script>.
+
+  <div id="main">
+  </div>
+
+  <script>
+    var ipc = require('ipc');
+
+    ipc.send('routes-request');
+    ipc.on('routes-reply', function(routes) {
+      var main = document.getElementById('main');
+      var html = '';
+      for (var i = 0 ; i < routes.length ; i++) {
+        html += '<div>' + routes[i].path + '</div>';
+      }
+
+      main.innerHTML = html;
+    });
+  </script>
+</body>
+</html>

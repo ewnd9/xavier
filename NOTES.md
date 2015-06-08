@@ -30,6 +30,8 @@ http://stackoverflow.com/questions/21586862/when-viewing-youtube-com-can-i-contr
 
 http://stackoverflow.com/questions/17805140/chrome-extension-use-the-same-socket-io-connection-under-background-page-and-con
 
+http://blog.soulserv.net/building-a-package-featuring-electron-as-a-stand-alone-application/
+
 http://electron.atom.io/docs/v0.27.0/api/global-shortcut/
 
 http://electron.atom.io/docs/v0.27.0/api/tray/

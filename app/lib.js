@@ -1,8 +1,9 @@
-#!/usr/bin/env node
-
-var config = require('./config.json');
 var exec = require('child_process').exec;
 var Promise = require('bluebird');
+var _ = require('lodash');
+
+var configManager = require('dot-file-config')('.xavier-npm', __dirname + '/../default-config.json');
+var config = configManager.data;
 
 var run = function(cmd) {
   return new Promise(function(resolve, reject) {
@@ -14,6 +15,40 @@ var run = function(cmd) {
       }
     });
   });
+};
+
+var Xavier = {};
+
+Xavier.systemCommands = function() {
+  return config.commands.system;
+};
+
+Xavier.systemRoutes = function() {
+  return _.map(Xavier.systemCommands(), function(command, key) {
+    return {
+      name: key,
+      path: "/api/command/system/" + key
+    };
+  });
+};
+
+Xavier.allPlugins = function() {
+  return Object.keys(config.pluginCommands);
+};
+
+Xavier.pluginCommands = function(plugin) {
+  return config.pluginCommands[plugin].commands;
+};
+
+Xavier.pluginRoutes = function(plugin) {
+  return _.flatten(_.map(pluginCommands(plugin), function(group, groupName) {
+    return _.map(group, function(command) {
+      return {
+        name: command.name,
+        path: "/api/command/" + groupName + "/" + command.data.domain + "/" + command.data.action
+      };
+    })
+  }));
 };
 
 var express = require('express');
@@ -29,7 +64,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/command/system/:command', function(req, res) {
-  var command = config.commands.system[req.params.command];
+  var command = systemCommands()[req.params.command];
   run(command).then(function(data) {
     res.send(data);
   });
@@ -69,3 +104,10 @@ io.on('connection', function (socket) {
   });
 
 });
+
+module.exports = {
+  expressServer: app,
+  socketServer: io,
+  config: configManager,
+  app: Xavier
+};
