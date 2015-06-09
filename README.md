@@ -15,7 +15,7 @@ $ xavier-cli
 
 socket service: localhost:3002
 web interface: localhost:3001
-config file: /home/ewnd9/.npm-packages/lib/node_modules/xavier/config.json
+config file: /home/ewnd9/.xavier-npm
 ```
 
 ## Web Interface
