@@ -4,7 +4,8 @@
   "description": "remote control",
   "main": "./app/gui.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "electron-rebuild"
   },
   "preferGlobal": "true",
   "bin": {
@@ -21,6 +22,7 @@
     "bluebird": "^2.9.27",
     "dot-file-config": "0.0.1",
     "electron-prebuilt": "^0.27.2",
+    "electron-rebuild": "^0.2.2",
     "express": "^4.12.4",
     "jade": "^1.10.0",
     "lodash": "^3.9.3",
