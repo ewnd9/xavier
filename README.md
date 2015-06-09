@@ -38,3 +38,5 @@ Plugins should send available commands via websocket in format:
 ## License
 
 MIT © [ewnd9](http://ewnd9.com)
+
+icon from http://www.iconarchive.com/show/button-ui-system-apps-icons-by-blackvariant/X11-icon.html

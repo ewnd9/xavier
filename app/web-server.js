@@ -111,8 +111,6 @@ module.exports = {
       console.log('web interface: localhost:' + port);
     });
 
-    console.log('Xavier', Xavier);
-
     return {
       app: app,
       server: server,
