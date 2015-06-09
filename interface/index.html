@@ -8,22 +8,36 @@
   We are using io.js <script>document.write(process.version)</script>
   and Electron <script>document.write(process.versions['electron'])</script>.
 
+  <div id="button">click</div>
   <div id="main">
   </div>
 
   <script>
     var ipc = require('ipc');
 
-    ipc.send('routes-request');
-    ipc.on('routes-reply', function(routes) {
-      var main = document.getElementById('main');
-      var html = '';
-      for (var i = 0 ; i < routes.length ; i++) {
-        html += '<div>' + routes[i].path + '</div>';
-      }
+    var update = function() {
+      ipc.send('routes-request');
+      ipc.on('routes-reply', function(routes) {
+        console.log(routes);
+        
+        var main = document.getElementById('main');
+        var html = '';
 
-      main.innerHTML = html;
-    });
+        for (var i = 0 ; i < routes.length ; i++) {
+          html += '<div>' + routes[i].path + '</div>';
+        }
+
+        main.innerHTML = html;
+      });
+    };
+
+    update();
+
+    var button = document.getElementById('button');
+    button.onclick = function() {
+      console.log('clicked');
+      update();
+    };
   </script>
 </body>
 </html>
