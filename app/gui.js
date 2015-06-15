@@ -12,6 +12,19 @@ var configManager = require('dot-file-config')('.xavier-npm', defaultConfig);
 
 var config = configManager.data;
 
+var debug = process.argv.slice(2)[0] === '--debug';
+
+process.title = 'Xavier';
+
+config.guiLogic = {
+  minimizeWindow: function() {
+    mainWindow.setSkipTaskbar(true);
+  },
+  restoreWindow: function() {
+    mainWindow.setSkipTaskbar(false);
+  }
+};
+
 console.log('starting xavier');
 console.log('config file: ' + configManager.path);
 
@@ -31,6 +44,13 @@ ipc.on('routes-request', function(event, status) {
   event.sender.send('routes-reply', Xavier.app.allRoutes());
 });
 
+ipc.on('save-combination-request', function(event, route) {
+  config.hotkeys = config.hotkeys || {};
+  config.hotkeys[route.path] = route.combination;
+  console.log(config);
+  // configManager.save();
+});
+
 app.on('ready', function() {
   mainWindow = new BrowserWindow({width: 400, height: 400});
 
@@ -42,10 +62,13 @@ app.on('ready', function() {
     mainWindow.setSkipTaskbar(false);
   });
 
-  mainWindow.minimize();
+  if (debug) {
+    mainWindow.openDevTools();
+  } else {
+    mainWindow.minimize();
+  }
 
   mainWindow.loadUrl('file://' + __dirname + '/../interface/index.html');
-  mainWindow.openDevTools();
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
@@ -64,17 +87,17 @@ app.on('ready', function() {
     }
   };
 
-  register('Super+z', function() {
-    request.get('http://localhost:3001/api/command/chrome/vk.com/prev', function (error, response, body) {
-      console.log(body);
-    });
-  });
-
-  register('Super+c', function() {
-    request.get('http://localhost:3001/api/command/chrome/vk.com/next', function (error, response, body) {
-      console.log(body);
-    });
-  });
+  // register('Super+Z', function() {
+  //   request.get('http://localhost:3001/api/command/chrome/vk.com/prev', function (error, response, body) {
+  //     console.log(body);
+  //   });
+  // });
+  //
+  // register('Super+c', function() {
+  //   request.get('http://localhost:3001/api/command/chrome/vk.com/next', function (error, response, body) {
+  //     console.log(body);
+  //   });
+  // });
 
   var appIcon = new Tray(path.resolve(__dirname + '/../icon.png'));
 

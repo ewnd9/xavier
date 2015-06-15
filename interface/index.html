@@ -1,43 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="XavierApp">
 <head>
-  <title>Hello World!</title>
+  <title>Xavier</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+  <script src="index.js"></script>
 </head>
 <body>
-  <h1>Hello World!</h1>
-  We are using io.js <script>document.write(process.version)</script>
-  and Electron <script>document.write(process.versions['electron'])</script>.
 
-  <div id="button">click</div>
-  <div id="main">
+  <div class="container">
+    <div ui-view></div>
   </div>
 
-  <script>
-    var ipc = require('ipc');
-
-    var update = function() {
-      ipc.send('routes-request');
-      ipc.on('routes-reply', function(routes) {
-        console.log(routes);
-        
-        var main = document.getElementById('main');
-        var html = '';
-
-        for (var i = 0 ; i < routes.length ; i++) {
-          html += '<div>' + routes[i].path + '</div>';
-        }
-
-        main.innerHTML = html;
-      });
-    };
-
-    update();
-
-    var button = document.getElementById('button');
-    button.onclick = function() {
-      console.log('clicked');
-      update();
-    };
-  </script>
 </body>
 </html>

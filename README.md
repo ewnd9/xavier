@@ -35,6 +35,16 @@ Plugins should send available commands via websocket in format:
 }
 ```
 
+## Development
+
+```
+$ bin/xavier.js --debug
+```
+
+## Issues
+
+- [ ] Icon vanishes from task bar
+
 ## License
 
 MIT © [ewnd9](http://ewnd9.com)

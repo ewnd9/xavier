@@ -1,5 +1,6 @@
 var exec = require('child_process').exec;
 var Promise = require('bluebird');
+var ip = require('ip');
 var _ = require('lodash');
 
 var run = function(cmd) {
@@ -88,9 +89,18 @@ module.exports = {
 
     app.get('/api/command/system/:command', function(req, res) {
       var command = Xavier.systemCommands()[req.params.command];
-      run(command).then(function(data) {
-        res.send(data);
-      });
+      if (req.params.command.indexOf('xavier:') === 0) {
+        if (req.params.command.indexOf('minimize-window') > -1) {
+          config.guiLogic.minimizeWindow();
+        } else if (req.params.command.indexOf('restore-window') > -1) {
+          config.guiLogic.restoreWindow();
+        }
+        res.send('ok');
+      } else {
+        run(command).then(function(data) {
+          res.send(data);
+        });
+      }
     });
 
     app.get('/api/command/:adapter/:id(*)', function(req, res) {
@@ -108,7 +118,7 @@ module.exports = {
 
     var server = app.listen(config['port'], function () {
       var port = server.address().port;
-      console.log('web interface: localhost:' + port);
+      console.log('web interface: http://' + ip.address() + ':' + port);
     });
 
     return {

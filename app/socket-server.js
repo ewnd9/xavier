@@ -1,11 +1,12 @@
 var SocketIO = require('socket.io');
+var ip = require('ip');
 
 module.exports = {
   startServer: function(config) {
     var socketPort = config['socket-port'];
 
     var io = SocketIO(socketPort);
-    console.log('socket service for plugins: localhost:' + socketPort);
+    console.log('socket service for plugins: ' + ip.address() + ':' + socketPort);
 
     io.on('connection', function (socket) {
       socket.on('init', function (data) {
