@@ -1,10 +1,10 @@
 module.exports = {
-  startApp: function(config) {
-    var webServer = require('./web-server').startServer(config);
+  startApp: function(configManager) {
+    var webServer = require('./web-server').startServer(configManager);
     var app = webServer.app;
     var Xavier = webServer.Xavier;
 
-    var socketServer = require('./socket-server').startServer(config);
+    var socketServer = require('./socket-server').startServer(configManager);
     var io = socketServer.io;
 
     return {

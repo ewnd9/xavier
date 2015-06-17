@@ -16,7 +16,8 @@ var run = function(cmd) {
 };
 
 module.exports = {
-  startServer: function(config) {
+  startServer: function(configManager) {
+    var config = configManager.data;
     var Xavier = {};
 
     Xavier.systemCommands = function() {
@@ -25,27 +26,34 @@ module.exports = {
 
     Xavier.systemRoutes = function() {
       return _.map(Xavier.systemCommands(), function(command, key) {
+        var path = "/api/command/system/" + key;
+        console.log(config.hotkeys);
+
         return {
           name: key,
-          path: "/api/command/system/" + key
+          path: "/api/command/system/" + key,
+          hotkey: config.hotkeys[path]
         };
       });
     };
 
     Xavier.allPlugins = function() {
-      return Object.keys(config.pluginCommands);
+      return Object.keys(configManager.pluginCommands || {});
     };
 
     Xavier.pluginCommands = function(plugin) {
-      return config.pluginCommands[plugin].commands;
+      return configManager.pluginCommands[plugin].commands;
     };
 
     Xavier.pluginRoutes = function(plugin) {
       return _.map(Xavier.pluginCommands(plugin), function(command) {
+        var path = "/api/command/" + plugin + "/" + command.id;
+
         return {
           name: command.name,
           group: command.group,
-          path: "/api/command/" + plugin + "/" + command.id
+          path: path,
+          hotkey: config.hotkeys[path]
         };
       });
     };
@@ -91,9 +99,9 @@ module.exports = {
       var command = Xavier.systemCommands()[req.params.command];
       if (req.params.command.indexOf('xavier:') === 0) {
         if (req.params.command.indexOf('minimize-window') > -1) {
-          config.guiLogic.minimizeWindow();
+          configManager.guiLogic.minimizeWindow();
         } else if (req.params.command.indexOf('restore-window') > -1) {
-          config.guiLogic.restoreWindow();
+          configManager.guiLogic.restoreWindow();
         }
         res.send('ok');
       } else {
@@ -104,7 +112,7 @@ module.exports = {
     });
 
     app.get('/api/command/:adapter/:id(*)', function(req, res) {
-      var adapter = config.pluginCommands[req.params.adapter];
+      var adapter = configManager.pluginCommands[req.params.adapter];
       var command = _.find(adapter.commands, function(command) { return command.id === req.params.id });
       var data = {
         id: command.id

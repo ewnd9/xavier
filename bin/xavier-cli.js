@@ -10,7 +10,7 @@ if (process.argv.slice(2).length === 0) {
   console.log('config file: ' + configManager.path);
 
   var app = require('../app/lib.js');
-  app.startApp(config);
+  app.startApp(configManager);
 } else if (process.argv.slice(2)[0] === 'routes') {
   var request = require('request');
 

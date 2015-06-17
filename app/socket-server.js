@@ -2,7 +2,8 @@ var SocketIO = require('socket.io');
 var ip = require('ip');
 
 module.exports = {
-  startServer: function(config) {
+  startServer: function(configManager) {
+    var config = configManager.data;
     var socketPort = config['socket-port'];
 
     var io = SocketIO(socketPort);
@@ -12,7 +13,8 @@ module.exports = {
       socket.on('init', function (data) {
         console.log('plugin connected: ' + data.adapter);
 
-        config.pluginCommands[data.adapter] = {
+        configManager.pluginCommands = configManager.pluginCommands || {};
+        configManager.pluginCommands[data.adapter] = {
           socket: socket,
           commands: data.commands
         };

@@ -11,16 +11,16 @@ var app = angular.module('XavierApp', [
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise("/commands");
+  $urlRouterProvider.otherwise("/hotkeys");
 
-  $stateProvider.state('commands', {
-    url: "/commands",
-    templateUrl: "templates/commands.html",
-    controller: 'CommandsCtrl'
+  $stateProvider.state('hotkeys', {
+    url: "/hotkeys",
+    templateUrl: "templates/hotkeys.html",
+    controller: 'HotkeysCtrl'
   });
 });
 
-app.controller('CommandsCtrl', function($scope) {
+app.controller('HotkeysCtrl', function($scope) {
 
   $scope.data = {};
 
@@ -41,11 +41,16 @@ app.controller('CommandsCtrl', function($scope) {
 
     combokeys.record(function(sequence) {
       $scope.$apply(function() {
-        route.combination = sequence[0];
+        route.hotkey = sequence[0];
         route.isEditing = null;
 
-        ipc.send('save-combination-request', route);
+        ipc.send('save-hotkey-request', route);
       });
     });
-  }
+  };
+
+  $scope.deleteHotkey = function($event, route) {
+    ipc.send('remove-hotkey-request', route);
+    delete route.hotkey;
+  };
 });

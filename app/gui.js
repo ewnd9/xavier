@@ -6,6 +6,7 @@ var BrowserWindow = require('browser-window');
 var Menu = require('menu');
 var Tray = require('tray');
 var app = require('app');
+var _ = require('lodash');
 
 var defaultConfig = __dirname + '/../default-config.json';
 var configManager = require('dot-file-config')('.xavier-npm', defaultConfig);
@@ -16,7 +17,7 @@ var debug = process.argv.slice(2)[0] === '--debug';
 
 process.title = 'Xavier';
 
-config.guiLogic = {
+configManager.guiLogic = {
   minimizeWindow: function() {
     mainWindow.setSkipTaskbar(true);
   },
@@ -28,7 +29,7 @@ config.guiLogic = {
 console.log('starting xavier');
 console.log('config file: ' + configManager.path);
 
-var Xavier = require('./lib.js').startApp(config);
+var Xavier = require('./lib.js').startApp(configManager);
 
 // Report crashes to our server.
 // require('crash-reporter').start();
@@ -44,11 +45,16 @@ ipc.on('routes-request', function(event, status) {
   event.sender.send('routes-reply', Xavier.app.allRoutes());
 });
 
-ipc.on('save-combination-request', function(event, route) {
+ipc.on('save-hotkey-request', function(event, route) {
   config.hotkeys = config.hotkeys || {};
-  config.hotkeys[route.path] = route.combination;
-  console.log(config);
-  // configManager.save();
+  config.hotkeys[route.path] = route.hotkey;
+  configManager.save();
+});
+
+ipc.on('remove-hotkey-request', function(event, route) {
+  config.hotkeys = config.hotkeys || {};
+  delete config.hotkeys[route.path];
+  configManager.save();
 });
 
 app.on('ready', function() {
@@ -87,17 +93,13 @@ app.on('ready', function() {
     }
   };
 
-  // register('Super+Z', function() {
-  //   request.get('http://localhost:3001/api/command/chrome/vk.com/prev', function (error, response, body) {
-  //     console.log(body);
-  //   });
-  // });
-  //
-  // register('Super+c', function() {
-  //   request.get('http://localhost:3001/api/command/chrome/vk.com/next', function (error, response, body) {
-  //     console.log(body);
-  //   });
-  // });
+  _.each(configManager.data.hotkeys, function(hotkey, route) {
+    register(hotkey.replace('meta', 'super'), function() {
+      request.get('http://localhost:3001' + route, function (error, response, body) {
+        console.log(body);
+      });
+    });
+  });
 
   var appIcon = new Tray(path.resolve(__dirname + '/../icon.png'));
 
