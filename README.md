@@ -1,6 +1,8 @@
 # Xavier
 
-Pluggable remote control for your system.
+Global shortcut binder and remote control platform.
+
+[Chrome-extension](https://github.com/ewnd9/xavier-browsers) for browser tabs control
 
 ## Installation
 
@@ -44,6 +46,13 @@ $ bin/xavier.js --debug
 ## Issues
 
 - [ ] Icon vanishes from task bar
+
+## Similar projects
+
+- https://github.com/acrisci/playerctl/
+- https://github.com/benkaiser/google-music-controller
+- https://github.com/benkaiser/desktop-command-remote
+- https://github.com/beardedspice/beardedspice
 
 ## License
 
