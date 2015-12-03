@@ -1,4 +1,4 @@
-var ipc = require('ipc');
+var ipc = require('electron').ipcMain;
 var $ = require('jquery');
 var angular = require('angular');
 

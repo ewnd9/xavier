@@ -1,7 +1,7 @@
 var path = require('path');
 var globalShortcut = require('global-shortcut');
 var request = require('request');
-var ipc = require('ipc');
+var ipc = require('electron').ipcMain;
 var BrowserWindow = require('browser-window');
 var Menu = require('menu');
 var Tray = require('tray');
@@ -57,6 +57,8 @@ ipc.on('remove-hotkey-request', function(event, route) {
   configManager.save();
 });
 
+var appIcon = null;
+
 app.on('ready', function() {
   mainWindow = new BrowserWindow({width: 400, height: 400});
 
@@ -74,7 +76,7 @@ app.on('ready', function() {
     mainWindow.minimize();
   }
 
-  mainWindow.loadUrl('file://' + __dirname + '/../interface/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/../interface/index.html');
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
@@ -101,9 +103,9 @@ app.on('ready', function() {
     });
   });
 
-  var appIcon = new Tray(path.resolve(__dirname + '/../icon.png'));
+  appIcon = new Tray(path.resolve(__dirname + '/../icon.png'));
 
-  appIcon.on('clicked', function(event) {
+  appIcon.on('click', function(event) {
     mainWindow.isMinimized() ? mainWindow.restore() : mainWindow.minimize();
   });
 
