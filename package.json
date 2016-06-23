@@ -1,7 +1,7 @@
 {
   "name": "xavier",
   "description": "Remote control CLI",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "bin": {
     "xavier-server": "lib/server.js",
     "xavier": "lib/client.js"
