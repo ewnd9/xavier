@@ -1,12 +1,12 @@
 # Xavier
 
-Remote control
+CLI remote control for pages in Google Chrome and music playback in Android
 
 ## Usage
 
-### With [Chrome extension](https://github.com/ewnd9/xavier-browsers)
+### [Chrome extension](https://github.com/ewnd9/xavier-browsers)
 
-```
+```sh
 $ xavier chrome/tabs
 $ xavier chrome/active-tab
 $ xavier chrome/activate-tab <url>
@@ -22,6 +22,16 @@ $ xavier vk.com/prev
 $ xavier vk.com/next
 
 $ xavier youtube.com/play-or-pause
+```
+
+### [Android app](https://github.com/ewnd9/xavier-android)
+
+```sh
+$ xavier --setup-gcm # then restart server
+$ xavier android/next-track
+$ xavier android/previous-track
+$ xavier android/play-pause
+$ xavier android/now-playing --notify
 ```
 
 ## Why not webdriver?

@@ -1,6 +1,6 @@
 {
   "name": "xavier",
-  "description": "Remote control CLI",
+  "description": "CLI remote control for pages in Google Chrome and music playback in Android",
   "version": "0.1.0",
   "bin": {
     "xavier-server": "lib/server.js",
@@ -19,7 +19,8 @@
   "keywords": [
     "remote control",
     "CLI",
-    "chrome"
+    "chrome",
+    "android"
   ],
   "dependencies": {
     "inquirer-credentials": "^3.0.0",
