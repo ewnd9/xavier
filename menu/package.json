@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "dependencies": {
+    "dbus": "^0.2.19",
+    "dbusmenu": "^0.1.0",
+    "libui-node": "0.0.12",
+    "ntk": "^1.1.0",
+    "pify": "^2.3.0",
+    "x11": "^2.1.0"
+  }
+}
