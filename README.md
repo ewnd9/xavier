@@ -42,7 +42,13 @@ https://sqa.stackexchange.com/questions/317/attach-to-browser-not-spawned-by-sel
 ## Install
 
 ```sh
-$ npm install -g xavier
+$ npm install -g xavier forever
+```
+
+## Usage
+
+```sh
+$ forever xavier-server
 ```
 
 ## Development
