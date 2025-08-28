@@ -41,9 +41,7 @@ https://sqa.stackexchange.com/questions/317/attach-to-browser-not-spawned-by-sel
 
 ## Install
 
-```sh
-$ npm install -g xavier forever
-```
+The `xavier` package was manually unpublished from npm on 2025-08-28. The name has been released for potential future use.
 
 ## Usage
 
